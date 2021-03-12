@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, ModalController } from '@ionic/angular';
+import { ShowPage } from '../show/show.page';
+import { crudapi } from './crudapi';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HomePage {
 
-  // tmpobj: any;
+  //tmpobj: any;
   categorys: any = [
     {
       name: 'ส้มตำ' ,
@@ -34,13 +38,134 @@ export class HomePage {
       recipe: '1.มะละกอ /n 2.ปลาร้า',
       cook : 'me'
     },
-    {
-      name: 'ส้มตำ' ,
-      img: 'https://img.kapook.com/u/2016/surauch/cook1/somtam1.jpg',
-      recipe: '1.มะละกอ /n 2.ปลาร้า',
-      cook : 'me'
-    }
   ];
+  //alertCtrl: any;
+  //getcrud: any;
+  tmpobj: any;
 
-  constructor(public activatedRoute: ActivatedRoute, private router: Router) {}
+
+  constructor(public activatedRoute: ActivatedRoute, private router: Router , private fs: AngularFirestore,private alertCtrl: AlertController,private getcrud: crudapi,private AecController: ModalController) {}
+
+  ngOnInit() {
+
+    this.getcrud.readData().subscribe(data => {
+    this.tmpobj = data.map(e => {
+    return {
+      id: e.payload.doc.id,
+      isEdit: false,
+      name: e.payload.doc.data()['name'.toString()],
+      img: e.payload.doc.data()['img'.toString()],
+      recipe: e.payload.doc.data()['recipe'.toString()],
+      cook: e.payload.doc.data()['cook'.toString()],
+  };
+ });
+  console.log(this.tmpobj);
+
+});
+
+
+}
+
+
+    // === ADD ===========================================
+
+    async presentPromptADD(i:any) {
+      let alert = this.alertCtrl.create({
+        //title: 'Login',
+        inputs: [
+          {
+            name: 'name',
+            placeholder: 'ชื่ออาหาร'
+
+          },
+          {
+            name: 'img',
+            placeholder: 'ลิ้งรูปภาพ'
+
+          },
+          {
+            name: 'recipe',
+            placeholder: 'เครื่ีองปรุง'
+          },
+          {
+            name: 'cook',
+            placeholder: 'วิธีทำ'
+          }
+
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'ADD',
+            handler: data => {
+              let tmpobj =  //db : inputform
+                {name: data.name,
+                 img: data.img,
+                 recipe: data.recipe,
+                 cook: data.cook
+                };
+                this.getcrud.createData(tmpobj);
+            }//handler
+
+          }//update
+        ]
+      });
+      (await alert).present();
+    }
+
+    deleteCountryItem(i: any){
+      for (let j=0; j< this.tmpobj.length; j++){
+          if (this.tmpobj[j] == i) //found
+              this.tmpobj.splice(j,1);
+      }//for
+    }//method
+
+    async presentConfirm(i: any) {
+      let alert = this.alertCtrl.create({
+        //title: 'Confirm purchase',
+        message: 'Do you want to delete ?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Yes',
+            handler: () => {
+              console.log('Deleted');
+
+              //this.deleteCountryItem(tmpitem);
+              this.getcrud.delData(i.id); //del rowfrom DB
+            }
+          }
+        ]
+      });
+      (await alert).present();
+    }
+
+    async presentModal(i: any) {
+      const model = await this.AecController.create({
+        component: ShowPage,
+        componentProps: {
+          name: i.name,
+                img: i.img,
+                recipe: i.recipe,
+                cook: i.cook
+        }
+      })
+      return await model.present();
+
+    }
+
+
+
 }

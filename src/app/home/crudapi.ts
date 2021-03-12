@@ -16,8 +16,13 @@ export class crudapi {
 
     }
 
-    delData(docId: any){
-      return this.fs.doc('foood/'+ docId).delete();
-
+    createData(tmpdoc: any){
+      return this.fs.collection('foood/').add(tmpdoc);
   }
+
+  delData(docId: any){
+    return this.fs.doc('foood/'+ docId).delete();
+
+}
+
 }

@@ -1,25 +1,34 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Home
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-item lines="none" color="warning">
+      <ion-label style="font-weight: 900;font-size: 35px;">
+        Food Recipe  
+      </ion-label>
+    </ion-item>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-card *ngFor="let i of categorys">
+
+  <ion-card *ngFor="let i of tmpobj">
     <ion-card-header>
-      <img src="{{i.img}}" [routerLink]="['/show',i]" >
-      <!--ion-card-subtitle>{{i.pop}}</!ion-card-subtitle>
-      <ion-card-subtitle>{{i.re}}</ion-card-subtitle -->
-      <p>
-      <ion-card-subtitle>{{i.name}}</ion-card-subtitle >
+    <ion-card-subtitle>
+    {{i.name}}
+      <img src="{{i.img}}" (click)="presentModal(i)" >
+        <ion-button shape="end"  (click)="presentConfirm(i)">
+          <ion-icon name="trash-outline">Delete</ion-icon>
+        </ion-button>
+      </ion-card-subtitle >
     </ion-card-header>
 
-    <ion-card-content>
-      <!--{{i.cap}}-->
-    </ion-card-content>
+
   </ion-card>
 
-</ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="presentPromptADD()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  </ion-content>

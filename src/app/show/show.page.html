@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Detal</ion-title>
-    <ion-button (click)="back()" slot="start">
+    <ion-title>How to cook</ion-title>
+    <ion-button (click)="closeModal()" slot="start">
       <ion-icon name="chevron-back-outline"></ion-icon>
     </ion-button>
 
@@ -9,17 +9,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-card  *ngFor="let i of tmpobj">
-    <ion-card-header>
-      <ion-card-title>{{i.name}}</ion-card-title>
-      <img src="{{i.img}}">
+  <ion-card >
+    <ion-card-header >
+      <ion-card-title>{{name}}</ion-card-title>
+      <img src="{{img}}">
       <ion-card-subtitle>
-        <label>{{i.recipe}}</label>
+        <label>เครื่องปรุง <br> {{recipe}}</label>
       </ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-      {{i.cook}}
+      วิธีทำ<br> {{cook}}
     </ion-card-content>
   </ion-card>
 </ion-content>
