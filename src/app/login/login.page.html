@@ -6,27 +6,8 @@
 
 <ion-content>
   <form>
-    <ion-item lines="full">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" #email required></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" #password required></ion-input>
-    </ion-item>
-    <ion-row>
-      <ion-col>
-        <ion-button type="submit" (click)="onLogin(email, password)" expand="block">Login</ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <p class="ion-text-end">
-          <a routerLink="/forgot-password">Forgot password? </a>
-        </p>
-      </ion-col>
-    </ion-row>
-    <span class="center-span"> or </span>
+  <ion-img width="180" height="180" src="https://icon-library.com/images/crowd-icon-png/crowd-icon-png-3.jpg"></ion-img> 
+  
     <ion-row>
       <ion-col>
         <ion-button type="submit" color="danger" (click)="onLoginGoogle()" expand="block"
@@ -35,11 +16,5 @@
       </ion-col>
     </ion-row>
   </form>
-  <ion-row>
-    <ion-col>
-      <p class="ion-text-end">
-        <a routerLink="/register">Create an account </a>
-      </p>
-    </ion-col>
-  </ion-row>
+ 
 </ion-content>

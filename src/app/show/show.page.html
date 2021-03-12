@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detal</ion-title>
+    <ion-button (click)="back()" slot="start">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card  *ngFor="let i of tmpobj">
+    <ion-card-header>
+      <ion-card-title>{{i.name}}</ion-card-title>
+      <img src="{{i.img}}">
+      <ion-card-subtitle>
+        <label>{{i.recipe}}</label>
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{i.cook}}
+    </ion-card-content>
+  </ion-card>
+</ion-content>
